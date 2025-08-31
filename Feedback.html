@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Feedback & Testimonials</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #011d04;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: white;
+      border: 5px solid orange;
+      padding: 40px;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 60px auto;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 15px;
+      font-size: 16px;
+      border: 5px solid #171717;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      resize: none;
+    }
+
+    textarea:focus {
+      border-color: #e67e22;
+      box-shadow: 0 0 10px rgba(230, 126, 34, 0.3);
+      outline: none;
+      transform: scale(1.02);
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 30px;
+      font-size: 16px;
+      border: none;
+      background-color: #ff9f43;
+      color: rgb(29, 28, 28);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    button:hover {
+      background-color: #e67e22;
+      transform: scale(1.05);
+    }
+
+    #responseMessage {
+      margin-top: 20px;
+      font-size: 16px;
+      color: green;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.5s ease;
+    }
+
+    #responseMessage.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Testimonial section */
+    .testimonials {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      
+    }
+
+    .testimonials h2 {
+      font-size: 28px;
+      color:#e67e22;
+      margin-bottom: 30px;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .testimonial-card {
+      background: white;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+
+    .testimonial-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .testimonial-name {
+      font-weight: bold;
+      color: #1d1610;
+      margin-top: 10px;
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Feedback Form -->
+  <div class="container">
+    <h1>We'd Love Your Feedback</h1>
+    <textarea id="feedback" placeholder="Write your feedback here..."></textarea>
+    <button onclick="submitFeedback()">Submit</button>
+    <p id="responseMessage"></p>
+  </div>
+
+  <!-- Testimonial Section -->
+  <div class="testimonials">
+    <h2>What Our Customers Say</h2>
+
+    <div class="testimonial-card">
+      <p class="testimonial-text">"The food was absolutely delicious, and the ambiance was perfect for a family dinner!"</p>
+      <p class="testimonial-name">– Priya Sharma</p>
+    </div>
+
+    <div class="testimonial-card">
+      <p class="testimonial-text">"Best biryani I’ve had in years. Friendly staff and quick service too!"</p>
+      <p class="testimonial-name">– Rahul Verma</p>
+    </div>
+
+    <div class="testimonial-card">
+      <p class="testimonial-text">"Lovely place for weekend brunch. Highly recommended!"</p>
+      <p class="testimonial-name">– Ayesha Khan</p>
+    </div>
+  </div>
+
+  <!-- JS for feedback + animation -->
+  <script>
+    function submitFeedback() {
+      const feedback = document.getElementById("feedback").value;
+      const responseMessage = document.getElementById("responseMessage");
+
+      if (feedback.trim() === "") {
+        responseMessage.textContent = "Please write some feedback!";
+        responseMessage.style.color = "red";
+      } else {
+        responseMessage.textContent = "Thank you for your feedback!";
+        responseMessage.style.color = "green";
+        document.getElementById("feedback").value = "";
+      }
+
+      responseMessage.classList.add("show");
+
+      setTimeout(() => {
+        responseMessage.classList.remove("show");
+      }, 3000);
+    }
+
+    // Animate testimonial cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>

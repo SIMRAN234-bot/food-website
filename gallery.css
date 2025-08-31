@@ -1,0 +1,8 @@
+body{
+    background-color:#011d04;
+    height: 400px;
+    width: 400px;
+}
+.line{
+    translate:200px -755px;
+}
